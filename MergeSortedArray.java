@@ -10,7 +10,7 @@ Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
 Output: [1,2,2,3,5,6]
 
 */
-Approach1: with Extra Space
+// Approach1: with Extra Space
 
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
@@ -40,3 +40,33 @@ class Solution {
         }
     }
 }
+
+// Approach2 : With O(1) Space
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int j = 0;
+        for (int i = 0; i < nums1.length; i++) {
+            if (nums1[i] > nums2[j]) {
+                int temp = nums1[i];
+                nums1[i] = nums2[j];
+                nums2[j] = temp;
+
+                int first = nums2[j];
+                int k = 0;
+                for (k = 1; k < n && nums2[k] < first; k++) {
+                    nums2[k - 1] = nums2[k];
+                }
+                nums2[k - 1] = first;
+            }
+        }
+        
+        int indx = 0;
+        for (int i = m; i < m + n; i++) {
+            nums1[i] = nums2[indx];
+            indx++;
+        }
+    }
+}
+
+  
